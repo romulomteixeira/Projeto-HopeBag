@@ -1,19 +1,12 @@
-// Integration patch between ProjectHopeBackpack and TerjeMedicine.
-// This file is written as a normal DayZ config source and should be packed in a small compatibility PBO.
-
 class CfgPatches
 {
 	class ProjectHopeBackpack_TerjeMedicine_Attachments
 	{
-		// Unique patch id for this compatibility layer.
 		name = "ProjectHopeBackpack + TerjeMedicine Attachments";
 		author = "Projeto-HopeBag";
-
-		// We only define config extensions, not new world entities.
 		units[] = {};
 		weapons[] = {};
-
-		// Load after both original mods so class inheritance and array merging are valid.
+		requiredVersion = 0.1;
 		requiredAddons[] =
 		{
 			"ProjectHopeBackpack",
@@ -22,32 +15,43 @@ class CfgPatches
 	};
 };
 
+class CfgMods
+{
+	class ProjectHopeBackpack_TerjeMedicine_Attachments
+	{
+		type = "mod";
+
+		class defs
+		{
+			class worldScriptModule
+			{
+				files[] =
+				{
+					"ProjectHopeBackpack_TerjeMedicine_Attachments/scripts/4_World"
+				};
+			};
+		};
+	};
+};
+
 class CfgSlots
 {
 	class Slot_MedicalPouchSlot
 	{
-		// Internal slot identifier used by inventorySlot[] / attachments[].
 		name = "MedicalPouchSlot";
-
-		// UI text shown to players.
 		displayName = "Medical Pouch";
-
-		// Optional icon, can be replaced by your own imageset icon.
 		ghostIcon = "set:dayz_inventory image:medicalbandage";
 	};
 };
 
 class CfgVehicles
 {
-	class Container_Base;
-	class PH_Backpack_01_ColorBase;
 	class SurvivorBackpack_Black;
 	class SurvivorBackpack_Blue;
 	class SurvivorBackpack_Green;
 	class SurvivorBackpack_Pink;
 	class SurvivorBackpack_Red;
 	class SurvivorBackpack_Yellow;
-
 	class TerjeFirstAidKitAdvancedBase;
 	class TerjeFirstAidKitIndividualBase;
 	class TerjeFirstAidKitMedium;
@@ -55,7 +59,6 @@ class CfgVehicles
 
 	class SurvivorBackpack_Black: SurvivorBackpack_Black
 	{
-		// Enable our new custom slot on this backpack variant.
 		attachments[] += { "MedicalPouchSlot" };
 	};
 
@@ -86,7 +89,6 @@ class CfgVehicles
 
 	class TerjeFirstAidKitAdvancedBase: TerjeFirstAidKitAdvancedBase
 	{
-		// Keep vanilla/provided slots and append compatibility slots.
 		inventorySlot[] += { "FirstAidKit", "MedicalPouchSlot" };
 	};
 
